@@ -38,19 +38,11 @@ def init_params(seed: int = 0) -> Params:
     return Params(W1=W1, b1=b1, W2=W2, b2=b2)
 
 
-def relu(z: np.ndarray) -> np.ndarray:
-    return np.maximum(z, 0.0)
-
-
 def log_softmax(z: np.ndarray) -> np.ndarray:
     z_max = np.max(z, axis=1, keepdims=True)
     z_shift = z - z_max
     log_sum_exp = np.log(np.sum(np.exp(z_shift), axis=1, keepdims=True))
     return z_shift - log_sum_exp
-
-
-def softmax(z: np.ndarray) -> np.ndarray:
-    return np.exp(log_softmax(z))
 
 
 def forward(params: Params, X: np.ndarray, Y: np.ndarray) -> tuple[float, Cache]:
