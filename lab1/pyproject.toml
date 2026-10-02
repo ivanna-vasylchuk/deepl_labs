@@ -1,0 +1,18 @@
+[project]
+name = "lab1"
+version = "0.1.0"
+description = "ЛР1: реалізація та перевірка зворотного поширення похибки"
+requires-python = "==3.12.*"
+dependencies = [
+    "numpy>=2.0",
+    "torch>=2.4",
+    "scikit-learn>=1.5",
+]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
