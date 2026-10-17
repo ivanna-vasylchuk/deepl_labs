@@ -2,27 +2,14 @@
 
 ## Запуск
 
-Набір даних: [Kaggle — Credit Card Fraud Detection (`mlg-ulb/creditcardfraud`)](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud).
-Файл `creditcard.csv` (~150 МБ) до репозиторію не додаємо — для доступу
-потрібен обліковий запис Kaggle. Шлях передається аргументом команди.
+Набір даних — [Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) на Kaggle (потрібен обліковий запис). Файл `creditcard.csv` до репозиторію не додано, шлях до нього передається через `--data`.
 
 ```bash
-# повторне навчання у нову теку (results/ уже заповнена, а стартовий код
-# відмовляється писати в непорожню теку)
-uv run python lab2_starter.py --data /шлях/до/creditcard.csv --out results_rerun
-
-# аналіз зі збережених прогнозів, без CSV і без повторного навчання
-uv run python main.py
+uv run python lab2_starter.py --data creditcard.csv --out results_rerun  # навчання
+uv run python main.py                                                    # аналіз зі збережених прогнозів
 ```
 
-`main.py` завжди читає збережені прогнози з `results/predictions.npz`, тому
-для перевірки чисел із README повторне навчання не потрібне. Прогнози в
-`results/` отримані командою з `--out results` ще до того, як тека була
-заповнена.
-
-`main.py` перезаписує лише свої результати (таблиці, графіки, звіти);
-`model.pt`, `predictions.npz`, `preprocessing.npz`, `run.json` та
-`split_summary.csv`, збережені під час навчання, не чіпаються.
+Аналіз читає збережені прогнози з `results/` і не потребує ні CSV, ні повторного навчання. Навчання пише в окрему теку, бо `results/` уже заповнена, а стартовий код не пише в непорожню теку.
 
 ## Структура
 
