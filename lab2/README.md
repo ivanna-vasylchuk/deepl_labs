@@ -252,7 +252,7 @@ $`t^{\ast}`$ лежить оцінка шахрайської транзакці
 у логіти:
 
 ```math
-\operatorname{logit}(p) = \ln \frac{p}{1 - p}, \qquad \Delta_{\text{logit}}(i) = \operatorname{logit}(s_i) - \operatorname{logit}(t^{\ast}).
+\mathrm{logit}(p) = \ln \frac{p}{1 - p}, \qquad \Delta_{\text{logit}}(i) = \mathrm{logit}(s_i) - \mathrm{logit}(t^{\ast}).
 ```
 
 У шкалі ймовірностей FN **за побудовою** задовольняє $`s_i \lt  t^{\ast}`$,
@@ -411,8 +411,8 @@ $`0.5`$-позитив ($`FN = 1`$, внесок $`10 \cdot FN = 10`$), зате
 факт $`s \lt  t^{\ast}`$ разом з $`s \gt  0`$ дає саме цю смугу. Тому всі FN у
 шкалі ймовірностей виглядають «однаково близько» до порога — це артефакт
 шкали. Щоб порівнювати впевненість FP і FN однаково, беремо
-$`\Delta_{\text{logit}} = \operatorname{logit}(s) - \operatorname{logit}(t^{\ast})`$,
-де $`\operatorname{logit}(p) = \ln\!\frac{p}{1 - p}`$, обчислюємо у `float64`
+$`\Delta_{\text{logit}} = \mathrm{logit}(s) - \mathrm{logit}(t^{\ast})`$,
+де $`\mathrm{logit}(p) = \ln\!\frac{p}{1 - p}`$, обчислюємо у `float64`
 (деталі — у розділі 10 теорії).
 
 | CSV-рядок | Тип | Мітка | Оцінка | Amount | Δ_prob | Δ_logit |
@@ -465,7 +465,7 @@ $`\Delta_{\text{logit}} = \operatorname{logit}(s) - \operatorname{logit}(t^{\ast
    формальний вивід — у розділі 9 теорії):
    $`\tau^{\ast} = c_{FP} / (c_{FP} + c_{FN}) = 1/11 \approx 0.0909`$. Наш
    $`t^{\ast} \approx 0.0312`$ помітно нижчий — у логітах це різниця
-   $`\operatorname{logit}(0.0909) - \operatorname{logit}(0.0312) \approx -2.30 - (-3.44) \approx 1.14`$.
+   $`\mathrm{logit}(0.0909) - \mathrm{logit}(0.0312) \approx -2.30 - (-3.44) \approx 1.14`$.
    Сама по собі ця розбіжність **не доводить** некаліброваності моделі:
    мінімум $`C`$ на скінченній вибірці зміщений, при лише 98 позитивах
    він досягається на одному кандидаті, а одразу над $`t^{\ast}`$ лежить
