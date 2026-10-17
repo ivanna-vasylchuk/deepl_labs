@@ -2,7 +2,7 @@
 
 ## Запуск
 
-Набір даних — [Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) на Kaggle (потрібен обліковий запис). Файл `creditcard.csv` до репозиторію не додано, шлях до нього передається через `--data`.
+Набір даних — [Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) на Kaggle.
 
 ```bash
 uv run python lab2_starter.py --data creditcard.csv --out results_rerun  # навчання
