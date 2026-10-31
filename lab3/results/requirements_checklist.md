@@ -11,7 +11,7 @@
 | 7 | **AdamW**, групи й lr з таблиці режимів, `weight_decay=1e-4`, параметри без `requires_grad` не входять | `model.py::make_optimizer` + перевірка в `checks.py::param_report` | «Пункт 2» | — |
 | 8 | **BN за замовчуванням** (`momentum=0.1, eps=1e-5`) | `nn.BatchNorm2d` без модифікацій | «Пункт 2» (`bn` в `run.json`) | — |
 | 9 | **set_train_mode** на початку КОЖНОЇ епохи | `model.py::set_train_mode`, виклик в `engine.py::train_one_run` | — | — |
-| 10 | **train loader** `bs=32, shuffle=True, drop_last=False, num_workers=0`, без власного generator/sampler | `data.py::make_train_loader` | — | «Структура» |
+| 10 | **train loader** `bs=32, shuffle=True, drop_last=False, num_workers=0`, без власного generator/sampler | `data.py::make_train_loader` | «Структура» | — |
 | 11 | **val/test loader** `bs=64, shuffle=False, num_workers=0` | `data.py::make_eval_loader` | — | — |
 | 12 | **Бюджет 8 × 38 = 304 кроки**, останній пакет 16 зображень | `config.py::EPOCHS,STEPS_PER_EPOCH` + `drop_last=False` | «Пункт 3» | — |
 | 13 | **Втрата епохи** = `∑ L_b·|b| / 1200` | `engine.py::train_one_run` (`weighted_sum / 1200.0`) | «Структура» | — |
@@ -47,5 +47,5 @@
 | **Що здати** | `lab3_model.pt` вибраного запуску (≈45 МБ) | GitHub Release `lab3` (42.7 МБ; у репозиторій не додано через ліміт 25 МБ на завантаження через браузер) | «Структура», «Пункт 5» | — |
 | **Що здати** | Рисунки (пакет, криві, матриця, помилки) | `figures/*.png` | «Структура» | — |
 | **Що здати** | README | `README.md` | — | — |
-| **Що здати** | Набір НЕ додавати | у `.gitignore` немає, бо набір поза lab3/ (`~/data/intel/`) | — | — |
+| **Що здати** | Набір НЕ додавати | набору в репозиторії немає, він лежить поза lab3/ (`~/data/intel/`) | — | — |
 | **Відтворюваність** | Відхилення оголошено (CUDA-збірка; commit_hash=null) | README «Відтворюваність» | — | — |
