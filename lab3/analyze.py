@@ -312,8 +312,8 @@ def draw_errors(picked: list[dict], data_root: Path, out_path: Path) -> None:
             fontsize=9,
         )
         ax.axis("off")
-    fig.suptitle("П'ять характерних помилок на test (за правилом умови)", fontsize=11)
-    fig.tight_layout()
+    fig.suptitle("П'ять характерних помилок на test (за правилом умови)", fontsize=11, y=1.0)
+    fig.tight_layout(rect=[0, 0, 1, 0.93])
     out_path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_path, dpi=150)
     plt.close(fig)
@@ -509,6 +509,15 @@ def main() -> None:
     print(
         f"  meta_matches_rule={sel['meta_matches_rule']}, weights_match_source={sel['weights_match_source_run']}"
     )
+    if not (
+        sel["meta_matches_rule"]
+        and sel["classes_ok"]
+        and sel["img_size_ok"]
+        and sel["weights_match_source_run"] is not False
+    ):
+        raise SystemExit(
+            "[analyze] помилка: lab3_model.pt не відповідає правилу вибору за журналами — test не запускаю"
+        )
     test = None
     errors = None
     if not args.skip_test:

@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import platform
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -54,6 +55,25 @@ def _sync(device: torch.device) -> None:
 
 def _file_sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def git_info(root: Path) -> dict:
+    def run(*args: str) -> str:
+        return subprocess.run(
+            ["git", "-C", str(root), *args], capture_output=True, text=True, check=True
+        ).stdout.strip()
+
+    try:
+        run("ls-files", "--error-unmatch", "train.py")
+        commit = run("rev-parse", "HEAD")
+        dirty = bool(run("status", "--porcelain", "--", "*.py", "pyproject.toml", "uv.lock"))
+        return {"commit_hash": commit, "git_dirty": dirty, "git_note": ""}
+    except (OSError, subprocess.CalledProcessError):
+        return {
+            "commit_hash": None,
+            "git_dirty": None,
+            "git_note": "тека lab3 не відстежується git-репозиторієм",
+        }
 
 
 def code_sha256(code_files: list[Path]) -> dict[str, str]:
@@ -111,8 +131,6 @@ def train_one_run(
     data_root: Path,
     runs_dir: Path,
     code_files: list[Path],
-    *,
-    git_note: str = "",
 ) -> dict:
     out_dir = runs_dir / f"{regime}_seed{seed}"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -187,9 +205,7 @@ def train_one_run(
         "loaders": {"train": _loader_meta(train_loader), "validation": _loader_meta(val_loader)},
         "split_sha256": _file_sha256(SPLIT_CSV),
         "code_sha256": code_sha256(code_files),
-        "commit_hash": None,
-        "git_dirty": None,
-        "git_note": git_note,
+        **git_info(Path(__file__).parent),
         "versions": {
             "python": sys.version.split()[0],
             "torch": torch.__version__,

@@ -28,7 +28,6 @@ CODE_FILES = [
     Path(__file__).parent / fn
     for fn in ("config.py", "data.py", "model.py", "engine.py", "train.py")
 ]
-GIT_NOTE = "запуски зроблено до перенесення lab3/ у репозиторій deepl_labs; код ідентифікується хешами файлів у code_sha256"
 DEFAULT_RUN_ORDER: list[tuple[str, int]] = [
     (r, s) for r in ("scratch", "frozen", "unfreeze") for s in SEEDS[r]
 ]
@@ -117,9 +116,7 @@ def do_runs(
             continue
         print(f"[run] {regime}/seed={seed} …")
         t0 = time.perf_counter()
-        meta = train_one_run(
-            regime, seed, device, data_root, runs_dir, CODE_FILES, git_note=GIT_NOTE
-        )
+        meta = train_one_run(regime, seed, device, data_root, runs_dir, CODE_FILES)
         dt = time.perf_counter() - t0
         f8 = meta["per_epoch_val_macro_f1"][-1]
         print(f"[run] {regime}/seed={seed} done: F8={f8:.4f}, {dt:.1f}s wall")
