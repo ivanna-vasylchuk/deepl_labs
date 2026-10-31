@@ -1,0 +1,139 @@
+{
+  "regime": "unfreeze",
+  "seed": 2,
+  "epochs": 8,
+  "steps_per_epoch": 38,
+  "total_steps": 304,
+  "img_size": 160,
+  "dtype": "float32",
+  "weights": "ResNet18_Weights.IMAGENET1K_V1",
+  "modules_in_eval": [
+    "conv1",
+    "bn1",
+    "layer1",
+    "layer2",
+    "layer3"
+  ],
+  "transforms": {
+    "train": [
+      "RandomResizedCrop(size=(160, 160), scale=(0.7, 1.0), ratio=(0.75, 1.3333), interpolation=bilinear, antialias=True)",
+      "RandomHorizontalFlip(p=0.5)",
+      "ToTensor()",
+      "Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))"
+    ],
+    "validation": [
+      "Resize(size=(160, 160), interpolation=bilinear, max_size=None, antialias=True)",
+      "ToTensor()",
+      "Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))"
+    ]
+  },
+  "optimizer": {
+    "name": "AdamW",
+    "weight_decay_default": 0.0001,
+    "param_groups": [
+      {
+        "lr": 0.003,
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0001,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "differentiable": false,
+        "fused": null,
+        "n_params": 3078
+      },
+      {
+        "lr": 0.0003,
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0001,
+        "amsgrad": false,
+        "foreach": null,
+        "maximize": false,
+        "capturable": false,
+        "differentiable": false,
+        "fused": null,
+        "n_params": 8393728
+      }
+    ]
+  },
+  "bn": {
+    "momentum": 0.1,
+    "eps": 1e-05,
+    "note": "за замовчуванням nn.BatchNorm2d"
+  },
+  "loaders": {
+    "train": {
+      "batch_size": 32,
+      "shuffle": true,
+      "drop_last": false,
+      "num_workers": 0
+    },
+    "validation": {
+      "batch_size": 64,
+      "shuffle": false,
+      "drop_last": false,
+      "num_workers": 0
+    }
+  },
+  "split_sha256": "b29c53c7e41b0c4bb36e54d8ca3a9bcbac11eca96abeab8ba4fbcf5937a160b8",
+  "code_sha256": {
+    "config.py": "5ac560637cda6fc8c3df3a377a93345ad014b189e6e0f9eb9bc09b9fe27e2e28",
+    "data.py": "be3470f4af4ee8451a47936515cd3ab89b028995e551ff44165a516cf2e8b46d",
+    "engine.py": "45f12ca8f29883be04af5481bf2027eb82b11da9712f0885304a360ad708da8c",
+    "model.py": "979e15ab4a34e6dec330ca034c036657db4135943e652cba953923e71b9b471d",
+    "train.py": "b3bb9aa49964d5a9565aa7cb26fe9eeef8f015fafbfea7fb5d9d0c0dd25c28d4"
+  },
+  "commit_hash": null,
+  "git_dirty": null,
+  "git_note": "запуски зроблено до перенесення lab3/ у репозиторій deepl_labs; код ідентифікується хешами файлів у code_sha256",
+  "versions": {
+    "python": "3.12.14",
+    "torch": "2.6.0+cu124",
+    "torchvision": "0.21.0+cu124",
+    "numpy": "2.5.4",
+    "sklearn": "1.9.1"
+  },
+  "device": {
+    "type": "cuda",
+    "name": "NVIDIA GeForce GTX 1650 Ti"
+  },
+  "classes": [
+    "buildings",
+    "forest",
+    "glacier",
+    "mountain",
+    "sea",
+    "street"
+  ],
+  "per_epoch_train_loss": [
+    0.5556419071555138,
+    0.15988186093668144,
+    0.12072280300160249,
+    0.09039139260848363,
+    0.12116107913975914,
+    0.10063052820662657,
+    0.08324949368834496,
+    0.09311387338985999
+  ],
+  "per_epoch_val_macro_f1": [
+    0.9007970728490237,
+    0.8975039332620719,
+    0.8962240577392214,
+    0.894918540887724,
+    0.891723849951528,
+    0.8772052312434336,
+    0.880724829000445,
+    0.8750022094676303
+  ],
+  "train_time_s": 25.82198609199986,
+  "total_time_s": 52.05063262699696
+}
