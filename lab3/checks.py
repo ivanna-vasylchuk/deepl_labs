@@ -163,7 +163,7 @@ def write_initial_loss_report(scratch: dict, frozen: dict, out_path: Path) -> No
     def _predict(d):
         nf = d["feature_norm_mean"]
         std_pred = math.sqrt((nf * nf + 1) / (3 * 512))
-        l0_pred = ln6 + d["logits_std"] ** 2 / 2
+        l0_pred = ln6 + d["logits_std"] ** 2 * (NUM_CLASSES - 1) / (2 * NUM_CLASSES)
         return (std_pred, l0_pred)
 
     rows = []
@@ -233,14 +233,16 @@ def write_initial_loss_report(scratch: dict, frozen: dict, out_path: Path) -> No
     )
     lines.append("")
     lines.append(
-        "**Чому L0 близька до ln 6, але трохи вище.** Для `z_k ~ N(0, σ²)` і `E[z_true] = 0` з Jensen з квадратичним членом Тейлора:"
+        "**Чому L0 близька до ln 6, але трохи вище.** Нехай `z_k ~ N(0, σ²)` незалежні. Розкладемо втрату `L(z) = −z_y + ln Σ_k e^{z_k}` у ряд Тейлора до другого порядку в точці `z = 0`: там `L = ln C`, градієнт `1/C − e_y` дає нульовий внесок у середньому, а гесіан `(I − 𝟙𝟙ᵀ/C)/C` має слід `(C − 1)/C`. Отже,"
     )
     lines.append("")
     lines.append("```math")
-    lines.append("E[L_0] \\;\\approx\\; \\ln C \\;+\\; \\frac{\\sigma^{2}}{2}.")
+    lines.append(
+        "E[L_0] \\;\\approx\\; \\ln C \\;+\\; \\frac{C-1}{2C}\\,\\sigma^{2} \\;=\\; \\ln 6 \\;+\\; \\frac{5}{12}\\,\\sigma^{2}."
+    )
     lines.append("```")
     lines.append("")
-    lines.append("Підставляючи виміряне `σ = std(z)`, отримуємо колонку `E[L0] прогноз`.")
+    lines.append("Множник `(C − 1)/C` замість 1 з'являється тому, що зсув, однаковий для всіх логітів, втрату не змінює. Підставляючи виміряне `σ = std(z)`, отримуємо колонку `E[L0] прогноз`.")
     lines.append("")
     lines.append(
         "**Відхилення — у межах шуму одного пакета.** Для вибірки з `B = 32` стандартна похибка середнього дорівнює `std(per-sample loss) / √B`; значення в колонці `SEM (пакет)`. Остання колонка — `|L0 − E[L0]| / SEM`. Обидва значення менші за 2, тобто розбіжність між прогнозом і виміром пояснюється саме скінченністю одного пакета, а не якимось спеціальним ефектом."
