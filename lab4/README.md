@@ -17,7 +17,7 @@ uv run --project lab4 python -m lab4.main \
     --out lab4/results
 ```
 
-`uv` ставить Python 3.12 і версії з `uv.lock`: torch 2.15.0, torchvision 0.29.2, onnx 1.23.2, onnxruntime 1.31.1, numpy 2.5.4, scikit-learn 1.9.1, pillow 13.0.0. На Linux і Windows torch/torchvision беруться з CPU-індексу PyTorch, на macOS — з PyPI. **Потрібна macOS ≥ 14** (колеса torch, torchvision і onnxruntime для arm64 зібрано під `macosx_14_0`). Усе рахується лише на CPU, масиви для ONNX Runtime — `float32`.
+`uv` ставить Python 3.12 і версії з `uv.lock`: torch 2.15.0, torchvision 0.29.2, onnx 1.23.2, onnxruntime 1.31.1, numpy 2.5.4, scikit-learn 1.9.1, pillow 13.0.0. На Linux і Windows torch/torchvision беруться з CPU-індексу PyTorch, на macOS — з PyPI. Усе рахується лише на CPU, масиви для ONNX Runtime — `float32`.
 
 Команда записує в `--out` файли `.onnx` (у репозиторій не додаються) і `lab4_results.json`: контролі, усі числа п.1–5, діагностики, параметри середовища і всі 300 вимірів затримки кожного варіанта (`step5_latency.<варіант>.raw_ms_by_round`). Прогін триває близько 3–4 хвилин.
 
